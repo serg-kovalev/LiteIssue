@@ -1,0 +1,107 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title= content_for?(:title) ? yield(:title) : "LiteIssue"
+    = csrf_meta_tags
+    = stylesheet_link_tag "bootstrap", :media=>"all"
+    = stylesheet_link_tag "/markitup/skins/markitup/style.css"
+    = stylesheet_link_tag "/markitup/sets/markdown/style.css"
+    = favicon_link_tag 'favicon.ico', :rel=>'shortcut icon'
+    = javascript_include_tag "application"
+    = javascript_include_tag "bootstrap"
+    = javascript_include_tag "/markitup/jquery.markitup.js"
+    = javascript_include_tag "/markitup/sets/markdown/set.js"
+
+  
+  %body{style: 'padding-bottom: 70px;'}
+    %div.container
+      %nav.navbar.navbar-inverse{:role => "navigation"}
+        / Brand and toggle get grouped for better mobile display
+        .navbar-header
+          %button.navbar-toggle{"data-target" => "#menu-collapse", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "/"}
+            LiteIssue -
+            %small Free micro project manager
+        #menu-collapse.collapse.navbar-collapse
+          %ul.nav.navbar-nav.pull-right
+            - if user_signed_in?
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                  Projects
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    = link_to 'New', project_new_path
+                  %li
+                    %a{:href => "#"} My projects
+                  %li.divider
+                    = my_projects( current_user.id )
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                  Tasks
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => "#"} New
+                  %li
+                    %a{:href => "#"} My tasks
+      = yield
+
+  #newProject.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "newProjectLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+          %h4#newProjectLabel.modal-title Create new project
+        .modal-body
+          = render file: 'projects/new'
+
+  #newTask.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "newTaskLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+          %h4#newTaskLabel.modal-title Create new task
+        .modal-body
+          = render file: 'tasks/new'
+  :javascript
+    $(document).ready(function()  {
+      $('#markdown').markItUp({
+        previewParserPath: '/markdown/preview',
+        onShiftEnter: {keepDefault:false, openWith:'\n\n'},
+        markupSet: [
+          {name:'First Level Heading', key:'1', placeHolder:'Your title here...', closeWith: '='},
+          {name:'Second Level Heading', key:'2', placeHolder:'Your title here...', closeWith: '-'},
+          {name:'Heading 3', key:'3', openWith:'### ', placeHolder:'Your title here...' },
+          {name:'Heading 4', key:'4', openWith:'#### ', placeHolder:'Your title here...' },
+          {separator:'---------------' },
+          {name:'Bold', key:'B', openWith:'**', closeWith:'**'},
+          {name:'Italic', key:'I', openWith:'_', closeWith:'_'},
+          {separator:'---------------' },
+          {name:'Bulleted List', openWith:'- ' },
+          {name:'Numeric List', openWith:'. ' },
+          {separator:'---------------' },
+          {
+            name:'Picture', key:'P',
+            replaceWith:'![[![Alternative text]!]]([![Url:!:http://]!] "[![Title]!]")'
+          },
+          {
+            name:'Link', key:'L', openWith:'[',
+            closeWith:']([![Url:!:http://]!] "[![Title]!]")',
+            placeHolder:'Your text to link here...'
+          },
+          {separator:'---------------'},
+          {name:'Quotes', openWith:'> '},
+          {name:'Code Block / Code', openWith:'(!(\t|!|`)!)', closeWith:'(!(`)!)'},
+          {separator:'---------------'},
+          {name:'Preview', call:'preview', className:"preview"}
+        ]
+      })
+    });

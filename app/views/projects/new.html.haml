@@ -1,0 +1,10 @@
+%form{role: 'form', method: 'post', action: "#{project_path}"}
+  = hidden_field_tag :authenticity_token, form_authenticity_token
+  .form-group
+    = label_tag 'name', 'Project name'
+    = text_field_tag 'project[name]', nil, class: 'form-control'
+  .form-group
+    = label_tag 'description', 'Description'
+    = text_area_tag 'project[description]', nil, class: 'form-control', id: 'markdown'
+  %p.text-right
+    = submit_tag 'Create', class: 'btn btn-success btn-xs'

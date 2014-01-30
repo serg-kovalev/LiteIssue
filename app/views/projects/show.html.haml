@@ -1,0 +1,50 @@
+%table.table.table-condensed
+  %tr
+    %td
+      %b Title:
+    %td
+      %b= @project.name
+  %tr
+    %td
+      %b Author:
+    %td= "#{@user.first_name} #{@user.last_name}"
+  %tr
+    %td
+      %b Status:
+    %td= @project.status
+  %tr
+    %td
+      %b Description:
+    %td= markdown( @project.description )
+
+%table.table.table-condensed
+  %thead
+    %tr
+      %td
+        .btn-group
+          %button.btn.btn-success.btn-sm.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+            Filters
+            %span.caret
+          %ul.dropdown-menu{role: "menu"}
+            %li
+              %a{href: "#"} All
+            %li
+              %a{href: "#"} Open
+            %li
+              %a{href: "#"} Watching
+        =link_to 'Create task', '#', class: 'btn btn-warning btn-sm', 'data-toggle' => 'modal', 'data-target' => '#newTask'
+      %td
+      %td
+    %tr
+      %td
+        %b Task
+      %td
+        %b Author
+      %td
+        %b Created
+  %tbody
+    - @project.tasks.each do |t|
+      %tr
+        %td= "<a href='#{task_show_path( t.id )}'>#{t.title}</a>".html_safe
+        %td= user_by_task_id( t.id )
+        %td= t.created_at

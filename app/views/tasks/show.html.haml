@@ -1,0 +1,36 @@
+%table.table
+  %tr
+    %td{style: 'width: 110px;'}
+      %b Project
+    %td= "<a href='#{project_show_path( @task.project_id )}'>#{@task.project.name}</a> ( #{@task.user.first_name} #{@task.user.last_name} )".html_safe
+  %tr
+    %td
+      %b Title:
+    %td= @task.title
+  %tr
+    %td
+      %b Author:
+    %td= "#{@task.user.first_name} #{@task.user.last_name}"
+  %tr
+    %td
+      %b Description:
+    %td= @task.description
+
+%form{role: 'form', method: 'post', action: "#{comment_path}"}
+  = hidden_field_tag :authenticity_token, form_authenticity_token
+  = hidden_field_tag 'comment[user_id]', current_user.id
+  = hidden_field_tag 'comment[task_id]', params[:id]
+  = text_area_tag 'comment[description]', nil, class: 'form-control', id: 'markdown'
+  %br
+  %p.text-right
+    = submit_tag 'Comment', class: 'btn btn-success btn-xs'
+
+%br
+
+- @comments.each do |c|
+  %p
+    = image_tag avatar_url( c.user.email, 24 )
+    %b= "#{c.user.first_name} #{c.user.last_name}"
+  %p= markdown( c.description )
+  %p
+    %small= c.created_at
