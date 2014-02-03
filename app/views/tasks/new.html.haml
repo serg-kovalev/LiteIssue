@@ -6,6 +6,6 @@
     = text_field_tag 'task[title]', nil, class: 'form-control'
   .form-group
     = label_tag 'description', 'Description'
-    = text_area_tag 'task[description]', nil, class: 'form-control', id: 'markdown'
+    = text_area_tag 'task[description]', nil, class: 'form-control markdown'
   %p.text-right
     = submit_tag 'Create', class: 'btn btn-success btn-xs'

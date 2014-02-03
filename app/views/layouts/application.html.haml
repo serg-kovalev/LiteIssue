@@ -73,7 +73,7 @@
           = render file: 'tasks/new'
   :javascript
     $(document).ready(function()  {
-      $('#markdown').markItUp({
+      $('.markdown').markItUp({
         previewParserPath: '/markdown/preview',
         onShiftEnter: {keepDefault:false, openWith:'\n\n'},
         markupSet: [
