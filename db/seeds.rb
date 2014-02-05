@@ -13,6 +13,7 @@ types.each do |n|
   TaskType.create!(
     name: n,
     number: types.index( n ) + 1
+    icon: n + ".png"
   )
 end
 
@@ -20,5 +21,6 @@ priorities.each do |n|
   TaskPriority.create!(
     name: n,
     number: priorities.index( n ) + 1
+    icon: n + ".png"
   )
 end
