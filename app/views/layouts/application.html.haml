@@ -63,14 +63,6 @@
         .modal-body
           = render file: 'projects/new'
 
-  #newTask.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "newTaskLabel", :role => "dialog", :tabindex => "-1"}
-    .modal-dialog
-      .modal-content
-        .modal-header
-          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
-          %h4#newTaskLabel.modal-title Create new task
-        .modal-body
-          = render file: 'tasks/new'
   :javascript
     $(document).ready(function()  {
       $('.markdown').markItUp({

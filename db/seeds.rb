@@ -8,19 +8,24 @@ User.create!(
 
 types      = [ 'task', 'proposal', 'bug' ]
 priorities = [ 'low', 'normal', 'critical' ]
+status     = [ 'new', 'progress', 'solved', 'feedback', 'reopened', 'closed' ]
 
 types.each do |n|
   TaskType.create!(
     name: n,
-    number: types.index( n ) + 1
-    icon: n + ".png"
+    icon: "#{n}.png"
   )
 end
 
 priorities.each do |n|
   TaskPriority.create!(
     name: n,
-    number: priorities.index( n ) + 1
-    icon: n + ".png"
+    icon: "#{n}.png"
+  )
+end
+
+status.each do |n|
+  TaskStatus.create!(
+    name: n
   )
 end

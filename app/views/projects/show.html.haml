@@ -1,3 +1,12 @@
+#newTask.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "newTaskLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+        %h4#newTaskLabel.modal-title Create new task
+      .modal-body
+        = render file: 'tasks/new'
+
 %table.table.table-condensed
   %tr
     %td
@@ -39,12 +48,25 @@
       %td
         %b Task
       %td
-        %b Author
+        %b T
+      %td
+        %b P
+      %td
+        %b Status
+      %td
+        %b Assignee
       %td
         %b Created
+      %td
+        %b Updated
   %tbody
     - @project.tasks.each do |t|
       %tr
         %td= "<a href='#{task_show_path( t.id )}'>#{t.title}</a>".html_safe
-        %td= user_by_task_id( t.id )
+        %td= image_tag( t.task_type.icon, size: '18x18' )
+        %td= image_tag( t.task_priority.icon, size: '16x16' )
+        %td
+          %span.badge new
+        %td= "#{t.user.first_name} #{t.user.last_name}"
         %td= t.created_at
+        %td= t.updated_at

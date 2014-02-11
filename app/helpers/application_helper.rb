@@ -28,4 +28,16 @@ module ApplicationHelper
     Redcarpet::Markdown.new(renderer, options).render(text).html_safe
   end
 
+  def get_task_priorities
+    TaskPriority.all.pluck(:name, :id)
+  end
+
+  def get_task_types
+    TaskType.all.pluck(:name, :id)
+  end
+
+  def get_task_statuses
+    TaskStatus.all.pluck(:name, :id)
+  end
+
 end

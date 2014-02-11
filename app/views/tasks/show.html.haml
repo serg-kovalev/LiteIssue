@@ -13,6 +13,14 @@
     %td= "#{@task.user.first_name} #{@task.user.last_name}"
   %tr
     %td
+      %b Type:
+    %td= @task.task_type.name
+  %tr
+    %td
+      %b Priority:
+    %td= @task.task_priority.name
+  %tr
+    %td
       %b Description:
     %td= @task.description
 
