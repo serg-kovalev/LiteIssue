@@ -5,6 +5,9 @@
     = label_tag 'title', 'Title'
     = text_field_tag 'task[title]', nil, class: 'form-control'
   .form-group
+    = label_tag 'tags', 'Tags'
+    = text_field_tag 'task[tags]', nil, class: 'form-control'
+  .form-group
     = label_tag 'description', 'Description'
     = text_area_tag 'task[description]', nil, class: 'form-control markdown'
   .form-group

@@ -16,7 +16,7 @@
   %tr
     %td
       %b Author:
-    %td= "#{@user.first_name} #{@user.last_name}"
+    %td= "#{@project.user.first_name} #{@project.user.last_name}"
   %tr
     %td
       %b Status:
@@ -60,9 +60,9 @@
       %td
         %b Updated
   %tbody
-    - @project.tasks.each do |t|
+    - @tasks.each do |t|
       %tr
-        %td= "<a href='#{task_show_path( t.id )}'>#{t.title}</a>".html_safe
+        %td= "<a href='#{task_show_path( t.id )}'>#{t.title}</a> ".html_safe
         %td= image_tag( t.task_type.icon, size: '18x18' )
         %td= image_tag( t.task_priority.icon, size: '16x16' )
         %td
@@ -71,3 +71,5 @@
         %td= "#{t.user.first_name} #{t.user.last_name}"
         %td= t.created_at
         %td= t.updated_at
+
+= tags_by_project_id( params[:id] ) if params[:id]

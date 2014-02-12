@@ -6,6 +6,7 @@ LiteIssue::Application.routes.draw do
   post '/comment' => 'comments#create'
 
   get '/task/:id' => 'tasks#show', :as => 'task_show'
+  get '/tag/:tag_name' => 'tasks#tag', :as => 'tag'
   post '/task' => 'tasks#create'
 
   get '/project/new' => 'projects#new'

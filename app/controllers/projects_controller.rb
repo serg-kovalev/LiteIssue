@@ -1,12 +1,9 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!
 
-  def new
-  end
-
   def show
-    @project = Project.find_by_id( params[:id] )
-    @user    = @project.user
+    @project = Project.find( params[:id] )
+    @tasks   = Task.where( project_id: params[:id] )
   end
 
   def create
